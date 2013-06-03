@@ -86,7 +86,7 @@ typedef enum _VianFillType {
     
     VianPlotType plotType;
     VianFillType fillType;
-    CPColor *lineColor;
+    CPTColor *lineColor;
     
     NSDecimalNumber *low;
     NSDecimalNumber *high;
@@ -102,7 +102,7 @@ typedef enum _VianFillType {
 @property(nonatomic,assign) BOOL inMainPlotSpace;
 @property(nonatomic,assign) VianPlotType plotType;
 @property(nonatomic,assign) VianFillType fillType;
-@property(nonatomic,retain) CPColor* lineColor;
+@property(nonatomic,retain) CPTColor* lineColor;
 @property(nonatomic,retain) NSDecimalNumber *low;
 @property(nonatomic,retain) NSDecimalNumber *high;
 @property(nonatomic,retain) NSArray *values;
@@ -113,7 +113,7 @@ typedef enum _VianFillType {
 
 @end
 
-@interface VianPlotAreaDescription : NSObject <CPPlotDataSource, MultiresDateFromIndexConverter> {
+@interface VianPlotAreaDescription : NSObject <CPTPlotDataSource, MultiresDateFromIndexConverter> {
     @private
     NSArray *plots;
     

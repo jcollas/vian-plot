@@ -10,9 +10,9 @@
 #import "_CPFillStripes.h"
 
 
-@implementation CPFill (Stripes)
+@implementation CPTFill (Stripes)
 
--(id)initWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth
+-(id)initWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth
 {
     [self release];
     
@@ -21,7 +21,7 @@
     return self;
 }
 
-+(CPFill *)fillWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth
++(CPTFill *)fillWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth
 {
     return [[(_CPFillStripes *)[_CPFillStripes alloc] initWithFirstColor:_firstColor secondColor:_secondColor stripeWidth:_stripeWidth] autorelease];
 }

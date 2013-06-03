@@ -185,7 +185,7 @@
         }
         
         NSString *lineColorStr = (NSString*)[dict objectForKey:@"lineColor"];
-        self.lineColor = [CPColor colorWithCGColor:[[UIColor colorWithHexString:lineColorStr] CGColor]];
+        self.lineColor = [CPTColor colorWithCGColor:[[UIColor colorWithHexString:lineColorStr] CGColor]];
         
         NSLocale *us = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         NSString *temp = (NSString*)[dict objectForKey:@"low"];
@@ -493,30 +493,30 @@
 #pragma mark -
 #pragma mark Plot Data Source Methods
 
--(NSUInteger)numberOfRecordsForPlot:(CPPlot *)plot {
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     VianPlot *p = [self plotWithIdentifier:(NSString*)plot.identifier];
     NSAssert([p.values count] == [p.xAxis.values count], @"Plot data inconsistency");
     return [p.values count];
 }
 
--(NSNumber *)numberForPlot:(CPPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     NSDecimalNumber *num = [NSDecimalNumber zero];
     
     VianPlot *srcPlot = [self plotWithIdentifier:(NSString*)plot.identifier];
     switch (srcPlot.plotType) {
         case VianPlotTypeScatter:
-            if (fieldEnum == CPScatterPlotFieldX) {
+            if (fieldEnum == CPTScatterPlotFieldX) {
                 num = [srcPlot.xAxis.values objectAtIndex:index];
             } 
-            else if (fieldEnum == CPScatterPlotFieldY) {
+            else if (fieldEnum == CPTScatterPlotFieldY) {
                 num = [srcPlot.values objectAtIndex:index];
             }
             break;
         case VianPlotTypeBar:
-            if (fieldEnum == CPBarPlotFieldBarLocation) {
+            if (fieldEnum == CPTBarPlotFieldBarLocation) {
                 num = [srcPlot.xAxis.values objectAtIndex:index];
             }
-            else if (fieldEnum == CPBarPlotFieldBarTip) {
+            else if (fieldEnum == CPTBarPlotFieldBarTip) {
                 num = [srcPlot.values objectAtIndex:index];
             }
             break;
@@ -524,19 +524,19 @@
             NSDictionary *fData = (NSDictionary*)[srcPlot.values objectAtIndex:index];
             
             switch (fieldEnum) {
-                case CPTradingRangePlotFieldX:
+                case CPTTradingRangePlotFieldX:
                     num = [srcPlot.xAxis.values objectAtIndex:index];
                     break;
-                case CPTradingRangePlotFieldClose:
+                case CPTTradingRangePlotFieldClose:
                     num = [fData objectForKey:@"close"];
                     break;
-                case CPTradingRangePlotFieldHigh:
+                case CPTTradingRangePlotFieldHigh:
                     num = [fData objectForKey:@"high"];
                     break;            
-                case CPTradingRangePlotFieldLow:
+                case CPTTradingRangePlotFieldLow:
                     num = [fData objectForKey:@"low"];
                     break;
-                case CPTradingRangePlotFieldOpen:
+                case CPTTradingRangePlotFieldOpen:
                     num = [fData objectForKey:@"open"];
                     break;
             }
@@ -548,7 +548,7 @@
     return num;
 }
 
--(CPLayer *)dataLabelForPlot:(CPPlot *)plot recordIndex:(NSUInteger)index 
+-(CPTLayer *)dataLabelForPlot:(CPTPlot *)plot recordIndex:(NSUInteger)index
 {
     return (id)[NSNull null];
 }

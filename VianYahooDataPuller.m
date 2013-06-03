@@ -310,7 +310,7 @@
     closePlot.inMainPlotSpace = YES;
     closePlot.plotType = VianPlotTypeScatter;
     closePlot.fillType = VianFillTypeStripes;
-    closePlot.lineColor = [CPColor whiteColor];
+    closePlot.lineColor = [CPTColor whiteColor];
     closePlot.low = closeMin;
     closePlot.high = closeMax;
     closePlot.values = [NSArray arrayWithArray:closePlotValues];
@@ -323,7 +323,7 @@
     volumePlot.inMainPlotSpace = NO;
     volumePlot.plotType = VianPlotTypeBar;
     volumePlot.fillType = VianFillTypeNone;
-    volumePlot.lineColor = [CPColor whiteColor];
+    volumePlot.lineColor = [CPTColor whiteColor];
     volumePlot.low = volumeMin;
     volumePlot.high = volumeMax;
     volumePlot.values = [NSArray arrayWithArray:volumePlotValues];
@@ -336,7 +336,7 @@
     ohlcPlot.inMainPlotSpace = YES;
     ohlcPlot.plotType = VianPlotTypeTradingRange;
     ohlcPlot.fillType = VianFillTypeNone;
-    ohlcPlot.lineColor = [CPColor redColor];
+    ohlcPlot.lineColor = [CPTColor redColor];
     ohlcPlot.low = lowMin;
     ohlcPlot.high = highMax;
     ohlcPlot.values = [NSArray arrayWithArray:ohlcPlotValues];

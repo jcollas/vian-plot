@@ -27,8 +27,8 @@
 
 -(void)myCommonInit
 {
-    CPXYGraph *graph = [[[CPXYGraph alloc] initWithFrame:CGRectZero] autorelease];
-	CPTheme *theme = [CPTheme themeNamed:kCPStocksTheme];
+    CPTXYGraph *graph = [[[CPTXYGraph alloc] initWithFrame:CGRectZero] autorelease];
+	CPTTheme *theme = [CPTTheme themeNamed:kCPTStocksTheme];
 	[graph applyTheme:theme];
 	graph.frame = self.bounds;
     graph.defaultPlotSpace.delegate = self;
@@ -43,15 +43,15 @@
 	self.hostedGraph = graph;
     
     // Axes
-    CPXYAxisSet *xyAxisSet = (id)graph.axisSet;
-    CPXYAxis *xAxis = xyAxisSet.xAxis;
-    CPMutableLineStyle *lineStyle = [xAxis.axisLineStyle mutableCopy];
+    CPTXYAxisSet *xyAxisSet = (id)graph.axisSet;
+    CPTXYAxis *xAxis = xyAxisSet.xAxis;
+    CPTMutableLineStyle *lineStyle = [xAxis.axisLineStyle mutableCopy];
     lineStyle.lineWidth = 1.5;
-    lineStyle.lineColor = [CPColor colorWithComponentRed: 0.3 green: 0.3 blue: 0.8 alpha: 1.0];
+    lineStyle.lineColor = [CPTColor colorWithComponentRed: 0.3 green: 0.3 blue: 0.8 alpha: 1.0];
     lineStyle.lineCap = kCGLineCapButt;
     xAxis.axisLineStyle = lineStyle;
     //	[lineStyle release];
-    xAxis.labelingPolicy = CPAxisLabelingPolicyLocationsProvided;
+    xAxis.labelingPolicy = CPTAxisLabelingPolicyLocationsProvided;
     xAxis.minorTicksPerInterval = 0;
     //xAxis.labelingPolicy = CPAxisLabelingPolicyAutomatic;
     //    CPMutableLineStyle *gridLineStyle = [CPMutableLineStyle lineStyle];
@@ -62,22 +62,22 @@
     xAxis.majorTickLineStyle = nil;
     
     
-    CPXYAxis *yAxis = xyAxisSet.yAxis;
+    CPTXYAxis *yAxis = xyAxisSet.yAxis;
     
-    CPMutableLineStyle *lineStyleY = [yAxis.axisLineStyle mutableCopy];
+    CPTMutableLineStyle *lineStyleY = [yAxis.axisLineStyle mutableCopy];
     lineStyleY.lineWidth = 1;
-    lineStyleY.lineColor = [CPColor colorWithComponentRed: 0.3 green: 0.3 blue: 0.8 alpha: 1.0];
+    lineStyleY.lineColor = [CPTColor colorWithComponentRed: 0.3 green: 0.3 blue: 0.8 alpha: 1.0];
     lineStyleY.lineCap = kCGLineCapButt;
     
     yAxis.axisLineStyle = nil;
-	yAxis.labelingPolicy = CPAxisLabelingPolicyLocationsProvided;
-    yAxis.labelAlignment = CPAlignmentTop;
+	yAxis.labelingPolicy = CPTAxisLabelingPolicyLocationsProvided;
+    yAxis.labelAlignment = CPTAlignmentTop;
     yAxis.majorGridLineStyle = lineStyleY;
     yAxis.majorTickLineStyle = nil;
     [lineStyleY release];
     
     // Add plot space for horizontal bar charts
-    CPXYPlotSpace *secondaryPlotSpace = [[CPXYPlotSpace alloc] init];
+    CPTXYPlotSpace *secondaryPlotSpace = [[CPTXYPlotSpace alloc] init];
 	secondaryPlotSpace.identifier = @"Secondary Plot Space";
     [graph addPlotSpace:secondaryPlotSpace];
     [secondaryPlotSpace release];
@@ -118,7 +118,7 @@
         model = newModel;
         
         NSAssert([model.plots count] != 0, @"No plots specified");
-        CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
+        CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
         [self updateGraphStylesFromCurrentModel];
         [self updateGraphDataFromCurrentModel];
         // TODO: the following call may be made in both previous calls instead
@@ -126,17 +126,17 @@
     }
 }
 
--(CPXYGraph*)graph
+-(CPTXYGraph*)graph
 {
-    return (CPXYGraph*)self.hostedGraph;
+    return (CPTXYGraph*)self.hostedGraph;
 }
 
 -(void)setHandleTouch:(BOOL)isHandleTouch
 {
-    CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
+    CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
     
-    CPXYPlotSpace *mainPlotSpace = (CPXYPlotSpace *)graph.defaultPlotSpace;
-    CPXYPlotSpace *secondaryPlotSpace = (CPXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
+    CPTXYPlotSpace *mainPlotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+    CPTXYPlotSpace *secondaryPlotSpace = (CPTXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
     
     handleTouch = isHandleTouch;
     mainPlotSpace.allowsUserInteraction = handleTouch;
@@ -144,12 +144,12 @@
 
 -(void)updateGraphDataFromCurrentModel
 {
-    CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
+    CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
     
-    CPXYPlotSpace *mainPlotSpace = (CPXYPlotSpace *)graph.defaultPlotSpace;
-    CPXYPlotSpace *secondaryPlotSpace = (CPXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
+    CPTXYPlotSpace *mainPlotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+    CPTXYPlotSpace *secondaryPlotSpace = (CPTXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
     
-    CPXYAxisSet *axisSet = (CPXYAxisSet *)graph.axisSet;
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
     
     NSDecimalNumber *high = model.mainPlotSpaceHigh;
     NSDecimalNumber *low = model.mainPlotSpaceLow;
@@ -160,8 +160,8 @@
     
     NSDecimalNumber *xRangeLength = [model.xAxisHigh decimalNumberBySubtracting:model.xAxisLow];
     
-    NSDecimalNumber *xExtraSpacePercent = [[NSDecimalNumber decimalNumberWithDecimal:CPDecimalFromInt(rightEmptySpaceWidth)] decimalNumberByDividingBy:
-                                           [NSDecimalNumber decimalNumberWithDecimal:CPDecimalFromInt(graph.bounds.size.width)]];
+    NSDecimalNumber *xExtraSpacePercent = [[NSDecimalNumber decimalNumberWithDecimal:CPTDecimalFromInt(rightEmptySpaceWidth)] decimalNumberByDividingBy:
+                                           [NSDecimalNumber decimalNumberWithDecimal:CPTDecimalFromInt(graph.bounds.size.width)]];
     NSDecimalNumber *xExtraSpace = [xRangeLength decimalNumberByMultiplyingBy:xExtraSpacePercent];
     NSDecimalNumber *xRangeLengthFinal = [xRangeLength decimalNumberByAdding:xExtraSpace];
     
@@ -176,9 +176,9 @@
         NSDecimalNumber *lowDisplayLocation = [low decimalNumberBySubtracting:lengthDisplacementValue];
         NSDecimalNumber *lengthDisplayLocation = [length decimalNumberByAdding:lengthDisplacementValue];
         
-        mainPlotSpace.xRange = [CPPlotRange plotRangeWithLocation:[model.xAxisLow decimalValue] length:[xRangeLengthFinal decimalValue]];
-        mainPlotSpace.yRange = [CPPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
-        axisSet.xAxis.gridLinesRange = [CPPlotRange plotRangeWithLocation:[low decimalValue] length:[length decimalValue]];
+        mainPlotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[model.xAxisLow decimalValue] length:[xRangeLengthFinal decimalValue]];
+        mainPlotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
+        axisSet.xAxis.gridLinesRange = [CPTPlotRange plotRangeWithLocation:[low decimalValue] length:[length decimalValue]];
         axisSet.xAxis.orthogonalCoordinateDecimal = [model.mainPlotSpaceLow decimalValue];
     }
     else {
@@ -188,7 +188,7 @@
         NSDecimalNumber *lowDisplayLocation = [low decimalNumberBySubtracting:lengthDisplacementValue];
         NSDecimalNumber *lengthDisplayLocation = [length decimalNumberByAdding:lengthDisplacementValue];
         
-        axisSet.xAxis.gridLinesRange = [CPPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
+        axisSet.xAxis.gridLinesRange = [CPTPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
         axisSet.xAxis.orthogonalCoordinateDecimal = [lowDisplayLocation decimalValue];
         
         NSDecimalNumber *sumMainSpaceDisplacementPercent = [mainSpaceDisplacementPercent decimalNumberByAdding:model.secondaryPlotSpaceHeightPercent];
@@ -197,8 +197,8 @@
         lowDisplayLocation = [low decimalNumberBySubtracting:lengthDisplacementValue];
         lengthDisplayLocation = [length decimalNumberByAdding:lengthDisplacementValue];
                
-        mainPlotSpace.xRange = [CPPlotRange plotRangeWithLocation:[model.xAxisLow decimalValue] length:[xRangeLengthFinal decimalValue]];
-        mainPlotSpace.yRange = [CPPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
+        mainPlotSpace.xRange = [CPTPlotRange plotRangeWithLocation:[model.xAxisLow decimalValue] length:[xRangeLengthFinal decimalValue]];
+        mainPlotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[lowDisplayLocation decimalValue] length:[lengthDisplayLocation decimalValue]];
         
         NSDecimalNumber *secondaryLow = model.secondaryPlotSpaceLow;
         NSDecimalNumber *secondaryHigh = model.secondaryPlotSpaceHigh;
@@ -211,7 +211,7 @@
         NSDecimalNumber *secondaryDisplayLow = [secondaryLow decimalNumberBySubtracting:secondaryDisplacementValue];
         
         secondaryPlotSpace.xRange = mainPlotSpace.xRange;
-        secondaryPlotSpace.yRange = [CPPlotRange plotRangeWithLocation:[secondaryDisplayLow decimalValue] length:[secondaryDisplayLength decimalValue]];
+        secondaryPlotSpace.yRange = [CPTPlotRange plotRangeWithLocation:[secondaryDisplayLow decimalValue] length:[secondaryDisplayLength decimalValue]];
         
     }
     
@@ -235,24 +235,24 @@
 
 -(void)updateGraphStylesFromCurrentModel
 {
-    CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
-    for (CPPlot *cpp in [graph allPlots]) {
+    CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
+    for (CPTPlot *cpp in [graph allPlots]) {
         [graph removePlot:cpp];
     }
     
     scatterPlotWithSymbol = nil;
     
-    CPXYPlotSpace *mainPlotSpace = (CPXYPlotSpace *)graph.defaultPlotSpace;
-    CPXYPlotSpace *secondaryPlotSpace = (CPXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
+    CPTXYPlotSpace *mainPlotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+    CPTXYPlotSpace *secondaryPlotSpace = (CPTXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
     
     for (VianPlot *plot in model.plots) {
         switch (plot.plotType) {
             case VianPlotTypeScatter: {
-                CPMutableLineStyle *scatterLineStyle = [CPMutableLineStyle lineStyle];
+                CPTMutableLineStyle *scatterLineStyle = [CPTMutableLineStyle lineStyle];
                 scatterLineStyle.lineColor = plot.lineColor;
                 scatterLineStyle.lineWidth = 2.0f;
                 
-                CPScatterPlot *scatterPlot = [[[CPScatterPlot alloc] initWithFrame:graph.bounds] autorelease];
+                CPTScatterPlot *scatterPlot = [[[CPTScatterPlot alloc] initWithFrame:graph.bounds] autorelease];
                 scatterPlot.identifier = plot.identifier;
                 scatterPlot.dataLineStyle = scatterLineStyle;
                 scatterPlot.dataSource = model;
@@ -261,10 +261,10 @@
                     scatterPlotWithSymbol = scatterPlot;
                     scatterPlot.dataSource = self;
                     
-                    CPMutableTextStyle *ts = [[[CPMutableTextStyle alloc] init] autorelease];
+                    CPTMutableTextStyle *ts = [[[CPTMutableTextStyle alloc] init] autorelease];
                     ts.fontName = @"Arial";
                     ts.fontSize = 24;
-                    ts.color = [CPColor whiteColor];
+                    ts.color = [CPTColor whiteColor];
                     scatterPlot.labelTextStyle = ts;
                     scatterPlot.labelFormatter = [[[NSNumberFormatter alloc] init] autorelease];
                 }
@@ -275,16 +275,16 @@
                     [graph addPlot:scatterPlot toPlotSpace:secondaryPlotSpace];
                 
                 if (plot.fillType == VianFillTypeStripes) {
-                    CPColor *firstStripesColor = [CPColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.0];
-                    CPColor *secondStripesColor = [CPColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.6];
-                    CPFill *areaStripesFill = [CPFill fillWithFirstColor:firstStripesColor secondColor:secondStripesColor stripeWidth:2];
+                    CPTColor *firstStripesColor = [CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.0];
+                    CPTColor *secondStripesColor = [CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+                    CPTFill *areaStripesFill = [CPTFill fillWithFirstColor:firstStripesColor secondColor:secondStripesColor stripeWidth:2];
                     scatterPlot.areaFill = areaStripesFill;
                 }
                 else if (plot.fillType == VianFillTypeGradient) {
-                    CPColor *areaColor = [CPColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.6];
-                    CPGradient *areaGradient = [CPGradient gradientWithBeginningColor:areaColor endingColor:[CPColor clearColor]];
+                    CPTColor *areaColor = [CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+                    CPTGradient *areaGradient = [CPTGradient gradientWithBeginningColor:areaColor endingColor:[CPTColor clearColor]];
                     areaGradient.angle = -90.0f;
-                    CPFill *areaGradientFill = [CPFill fillWithGradient:areaGradient];
+                    CPTFill *areaGradientFill = [CPTFill fillWithGradient:areaGradient];
                     scatterPlot.areaFill = areaGradientFill;
                 }
                 scatterPlot.areaBaseValue = plot.inMainPlotSpace ? [model.mainPlotSpaceLow decimalValue] : 
@@ -293,16 +293,16 @@
                 break;
                 
             case VianPlotTypeBar: {
-                CPBarPlot *volumePlot = [CPBarPlot tubularBarPlotWithColor:[CPColor blackColor] horizontalBars:NO];
+                CPTBarPlot *volumePlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor blackColor] horizontalBars:NO];
                 volumePlot.dataSource = model;
                 
-                CPMutableLineStyle *lineStyle = [volumePlot.lineStyle mutableCopy];
+                CPTMutableLineStyle *lineStyle = [volumePlot.lineStyle mutableCopy];
                 lineStyle.lineColor = plot.lineColor;
                 volumePlot.lineStyle = lineStyle;
                 [lineStyle release];
                 
                 volumePlot.fill = nil; 
-                volumePlot.barWidth = CPDecimalFromFloat(0.0f);
+                volumePlot.barWidth = CPTDecimalFromFloat(0.0f);
                 volumePlot.identifier = plot.identifier;
                 
                 if (plot.inMainPlotSpace) {
@@ -316,20 +316,20 @@
                 break;
                 
             case VianPlotTypeTradingRange: {
-                CPMutableLineStyle *tradingRangeLineStyle = [CPMutableLineStyle lineStyle];
+                CPTMutableLineStyle *tradingRangeLineStyle = [CPTMutableLineStyle lineStyle];
                 tradingRangeLineStyle.lineColor = plot.lineColor;
                 tradingRangeLineStyle.lineWidth = 1.0f;
-                CPTradingRangePlot *ohlcPlot = [[[CPTradingRangePlot alloc] initWithFrame:graph.bounds] autorelease];
+                CPTTradingRangePlot *ohlcPlot = [[[CPTTradingRangePlot alloc] initWithFrame:graph.bounds] autorelease];
                 ohlcPlot.identifier = plot.identifier;
                 ohlcPlot.lineStyle = tradingRangeLineStyle;
-                CPMutableTextStyle *whiteTextStyle = [CPMutableTextStyle textStyle];
-                whiteTextStyle.color = [CPColor whiteColor];
+                CPTMutableTextStyle *whiteTextStyle = [CPTMutableTextStyle textStyle];
+                whiteTextStyle.color = [CPTColor whiteColor];
                 whiteTextStyle.fontSize = 8.0;
                 ohlcPlot.labelTextStyle = whiteTextStyle;
                 ohlcPlot.labelOffset = 5.0;
                 ohlcPlot.stickLength = 2.0f;
                 ohlcPlot.dataSource = model;
-                ohlcPlot.plotStyle = CPTradingRangePlotStyleOHLC;
+                ohlcPlot.plotStyle = CPTTradingRangePlotStyleOHLC;
                 if (plot.inMainPlotSpace)
                     [graph addPlot:ohlcPlot];
                 else
@@ -489,7 +489,7 @@
 -(NSUInteger)selectedPointIndex:(NSDecimal)xCoord {
     if (scatterPlotWithSymbol != nil) {
         NSDecimalNumber *xCoordNum = [NSDecimalNumber decimalNumberWithDecimal:xCoord];
-        VianPlot *plot = [model plotWithIdentifier:scatterPlotWithSymbol.identifier];
+        VianPlot *plot = [model plotWithIdentifier:(NSString *)scatterPlotWithSymbol.identifier];
         for (NSDecimalNumber *num in plot.xAxis.values) {
             if ([num compare:xCoordNum] == NSOrderedDescending)
                 return [plot.xAxis.values indexOfObject:num];
@@ -500,13 +500,13 @@
     return 0;
 }
 
--(BOOL)plotSpace:(CPPlotSpace *)space shouldHandlePointingDeviceDownEvent:(id)event atPoint:(CGPoint)point
+-(BOOL)plotSpace:(CPTPlotSpace *)space shouldHandlePointingDeviceDownEvent:(id)event atPoint:(CGPoint)point
 {
     if (scatterPlotWithSymbol != nil) {
-        CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
+        CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
         
-        CPXYPlotSpace *mainPlotSpace = (CPXYPlotSpace *)graph.defaultPlotSpace;
-        CPXYPlotSpace *secondaryPlotSpace = (CPXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
+        CPTXYPlotSpace *mainPlotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+        CPTXYPlotSpace *secondaryPlotSpace = (CPTXYPlotSpace *)[graph plotSpaceWithIdentifier:@"Secondary Plot Space"];
         
         VianPlot *plot = [model plotWithIdentifier:(NSString*)scatterPlotWithSymbol.identifier];
         
@@ -514,9 +514,9 @@
         
         if (space == mainPlotSpace) {
         
-            CPXYAxisSet *axisSet = (CPXYAxisSet *)graph.axisSet;
-            /*CPXYAxis * */selectionAxis = [[[CPXYAxis alloc] init] autorelease];
-            selectionAxis.coordinate = CPCoordinateY;
+            CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
+            /*CPXYAxis * */selectionAxis = [[[CPTXYAxis alloc] init] autorelease];
+            selectionAxis.coordinate = CPTCoordinateY;
             
             point.x -= 20;
             
@@ -528,12 +528,12 @@
             selectionAxis.orthogonalCoordinateDecimal = 
             [(NSDecimalNumber*)[plot.xAxis.values objectAtIndex:selectedPointIndex] decimalValue];
                         
-            CPMutableLineStyle *ls = [axisSet.xAxis.axisLineStyle mutableCopy];
+            CPTMutableLineStyle *ls = [axisSet.xAxis.axisLineStyle mutableCopy];
             ls.lineWidth = 3.0;
-            ls.lineColor = [CPColor greenColor];
+            ls.lineColor = [CPTColor greenColor];
             selectionAxis.axisLineStyle = ls;
             selectionAxis.plotSpace = mainPlotSpace;
-            selectionAxis.labelingPolicy = CPAxisLabelingPolicyNone;
+            selectionAxis.labelingPolicy = CPTAxisLabelingPolicyNone;
             selectionAxis.visibleRange = axisSet.xAxis.gridLinesRange;
             
             axisSet.axes = [axisSet.axes arrayByAddingObject:selectionAxis];
@@ -546,11 +546,11 @@
     return NO;
 }
 
--(BOOL)plotSpace:(CPPlotSpace *)space shouldHandlePointingDeviceDraggedEvent:(id)event atPoint:(CGPoint)point
+-(BOOL)plotSpace:(CPTPlotSpace *)space shouldHandlePointingDeviceDraggedEvent:(id)event atPoint:(CGPoint)point
 {
     if (scatterPlotWithSymbol != nil) {
-        CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
-        CPXYAxisSet *axisSet = (CPXYAxisSet *)graph.axisSet;
+        CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
+        CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
         VianPlot *plot = [model plotWithIdentifier:(NSString*)scatterPlotWithSymbol.identifier];
         
         if (selectionAxis != nil) {
@@ -571,11 +571,11 @@
     return NO;
 }
 
--(BOOL)plotSpace:(CPPlotSpace *)space shouldHandlePointingDeviceCancelledEvent:(id)event
+-(BOOL)plotSpace:(CPTPlotSpace *)space shouldHandlePointingDeviceCancelledEvent:(id)event
 {
     if (scatterPlotWithSymbol != nil) {
-        CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
-        CPXYAxisSet *axisSet = (CPXYAxisSet *)graph.axisSet;
+        CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
+        CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
         
         if ([axisSet.axes containsObject:selectionAxis]) {
             NSRange range;
@@ -592,7 +592,7 @@
 }
 
 
--(BOOL)plotSpace:(CPPlotSpace *)space shouldHandlePointingDeviceUpEvent:(id)event atPoint:(CGPoint)point
+-(BOOL)plotSpace:(CPTPlotSpace *)space shouldHandlePointingDeviceUpEvent:(id)event atPoint:(CGPoint)point
 {
     if (clickerDelegate != nil) {
         double len = sqrt(pow(point.x - prevTouchPt.x, 2) + pow(point.y - prevTouchPt.y, 2));
@@ -602,8 +602,8 @@
     }
     
     if (scatterPlotWithSymbol != nil) {
-        CPXYGraph *graph = (CPXYGraph*)self.hostedGraph;
-        CPXYAxisSet *axisSet = (CPXYAxisSet *)graph.axisSet;
+        CPTXYGraph *graph = (CPTXYGraph*)self.hostedGraph;
+        CPTXYAxisSet *axisSet = (CPTXYAxisSet *)graph.axisSet;
         
         if ([axisSet.axes containsObject:selectionAxis]) {
             NSRange range;
@@ -619,15 +619,15 @@
     return NO;
 }
 
--(NSUInteger)numberOfRecordsForPlot:(CPPlot *)plot {
+-(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
     return [model numberOfRecordsForPlot:plot];
 }
 
--(NSNumber *)numberForPlot:(CPPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
+-(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index {
     return [model numberForPlot:plot field:fieldEnum recordIndex:index];
 }
 
--(CPLayer *)dataLabelForPlot:(CPPlot *)plot recordIndex:(NSUInteger)index 
+-(CPTLayer *)dataLabelForPlot:(CPTPlot *)plot recordIndex:(NSUInteger)index
 {
     if (scatterPlotWithSymbol == plot) {
         if (index == selectedPointIndex && selectionAxis != nil)
@@ -637,17 +637,17 @@
     return [model dataLabelForPlot:plot recordIndex:index];
 }
 
--(CPPlotSymbol *)symbolForScatterPlot:(CPScatterPlot *)plot recordIndex:(NSUInteger)index
+-(CPTPlotSymbol *)symbolForScatterPlot:(CPTScatterPlot *)plot recordIndex:(NSUInteger)index
 {
-    static CPPlotSymbol *sym = nil;
+    static CPTPlotSymbol *sym = nil;
     if (sym == nil) {
-        sym = [[CPPlotSymbol ellipsePlotSymbol] retain];
+        sym = [[CPTPlotSymbol ellipsePlotSymbol] retain];
         CGSize size;
         size.width = 15;
         size.height = 15;
         sym.size = size;
         sym.lineStyle = nil;
-        sym.fill = [CPFill fillWithColor:[CPColor greenColor]];
+        sym.fill = [CPTFill fillWithColor:[CPTColor greenColor]];
     }
     
     if (scatterPlotWithSymbol == plot) {

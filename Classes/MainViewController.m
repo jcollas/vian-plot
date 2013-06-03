@@ -151,7 +151,7 @@
 
 -(void)handleClick
 {
-    CPPlot* p = [[graphHost graph] plotWithIdentifier:@"OHLC Plot"];
+    CPTPlot* p = [[graphHost graph] plotWithIdentifier:@"OHLC Plot"];
     if (p.dataSource) {
         p.dataSource = nil;
     } else {

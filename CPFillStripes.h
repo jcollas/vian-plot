@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "CorePlot-CocoaTouch.h"
 
-@interface CPFill(Stripes)
+@interface CPTFill(Stripes)
 
-+(CPFill *)fillWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
++(CPTFill *)fillWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
 
--(id)initWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
+-(id)initWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
 
 @end

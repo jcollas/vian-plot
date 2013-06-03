@@ -18,13 +18,13 @@
 
 @end
 
-@interface VianGraphHostingView : CPGraphHostingView <CPPlotSpaceDelegate, CPScatterPlotDataSource> {
+@interface VianGraphHostingView : CPTGraphHostingView <CPTPlotSpaceDelegate, CPTScatterPlotDataSource> {
     @private
     VianPlotAreaDescription *model;
     BOOL handleTouch;
     NSUInteger graphIndexForTouch;
-    CPXYAxis *selectionAxis;
-    CPScatterPlot *scatterPlotWithSymbol;
+    CPTXYAxis *selectionAxis;
+    CPTScatterPlot *scatterPlotWithSymbol;
     NSUInteger selectedPointIndex;
     CGPoint prevTouchPt;
     id clickerDelegate;
@@ -37,5 +37,5 @@
 
 -(void)updateGraphDataFromCurrentModel;
 -(void)updateGraphStylesFromCurrentModel;
--(CPXYGraph*)graph;
+-(CPTXYGraph*)graph;
 @end
