@@ -7,8 +7,8 @@
 //
 
 #import "_CPFillStripes.h"
-#import "_CPFillGradient.h"
-#import "CPColor.h"
+#import "_CPTFillGradient.h"
+#import "CPTColor.h"
 
 #include <math.h>
 
@@ -21,7 +21,7 @@
 #pragma mark -
 #pragma mark init/dealloc
 
--(id)initWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
+-(id)initWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
 {
     if ( (self = [super init]) ) {
 		firstColor = [_firstColor retain];
@@ -67,7 +67,7 @@
     for (int i = 0; i < nStripes; stripeY += yCoordIncrement, ++i) {
         CGRect stripeRect = CGRectMake(rect.origin.x, stripeY, rect.size.width, stripeWidth);
         
-        CGContextSetFillColorWithColor(ctx, [CPColor colorWithComponentRed:fillColor[0] green:fillColor[1] blue:fillColor[2] alpha:fillColor[3]].cgColor);
+        CGContextSetFillColorWithColor(ctx, [CPTColor colorWithComponentRed:fillColor[0] green:fillColor[1] blue:fillColor[2] alpha:fillColor[3]].cgColor);
         CGContextFillRect(ctx, stripeRect);
         
         fillColor[0] = fillColor[0] + colorIncrement[0];
@@ -122,7 +122,7 @@
 
 -(Class)classForCoder
 {
-	return [CPFill class];
+	return [CPTFill class];
 }
 
 -(void)encodeWithCoder:(NSCoder *)coder

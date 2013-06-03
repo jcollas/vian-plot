@@ -7,20 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CPFill.h"
+#import "CPTFill.h"
 
-@class CPGradient;
+@class CPTGradient;
 
-@interface _CPFillStripes : CPFill <NSCopying, NSCoding> {
+@interface _CPFillStripes : CPTFill <NSCopying, NSCoding> {
     @private
-    CPColor *firstColor;
-    CPColor *secondColor;
+    CPTColor *firstColor;
+    CPTColor *secondColor;
     NSUInteger stripeWidth;
 }
 
 /// @name Initialization
 /// @{
--(id)initWithFirstColor:(CPColor *)_firstColor secondColor:(CPColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
+-(id)initWithFirstColor:(CPTColor *)_firstColor secondColor:(CPTColor *)_secondColor stripeWidth:(NSUInteger)_stripeWidth;
 ///	@}
 
 /// @name Drawing
